@@ -48,7 +48,44 @@ Thử nhảy đến kết quả thì không ổn vì có vẻ các giá trị nh
 
 <img width="753" height="135" alt="image" src="https://github.com/user-attachments/assets/f71f2e17-befc-472d-ada0-68168dbe14ea" />
 
-Đặt break point vào lệnh cmp trước lệnh jne, ta thấy 
+Đặt break point vào lệnh cmp trước lệnh jne, ta thấy chương trình so sánh rax với qword ptr ss: [rsp + 48]:
+
+<img width="1583" height="502" alt="image" src="https://github.com/user-attachments/assets/ea362fe0-c88f-4614-9e95-456fd11629ee" />
+
+Follow địa chỉ [rsp + 48] trong memory dump: 
+
+<img width="518" height="169" alt="image" src="https://github.com/user-attachments/assets/b8c51db1-3518-4ec7-a3cc-bf4a4c0d55af" />
+
+Dễ dàng thấy rax = D427202CB4B2 và giá trị đã tính toán được lưu vào [rsp + 48] = D42723958A82 (little edian). Em thấy 2 bytes đầu trùng nhau nên suy đoán khả năng số 37 là đúng. Lặp lại các bước trên với key0 = 37 thì đều thấy 2 bytes đầu đều là D427.
+
+Khả năng cao các số mình nhập vào là hệ số của của một đa thức f(x) với key0 là hệ số của số mũ cao nhất, key1 là hệ số của số mũ cao thứ 2 và và key2 là hệ số của số mũ thấp nhất. Để kiểm chứng uy nghĩ này em so sánh 2 giá trị của rax và [rsp + 48] là D427202CB4B2 < D42723958A82. 2 bytes tiếp theo của chuỗi được tính toán có vẻ đang lớn hơn của rax.
+
+Nên có bước thử như sau khá giống với binary search:
+- Chia số đã thử với 2 rồi lấy phần nguyên.
+- Thử số đó vào chương trình nếu 2 bytes tiếp theo của chuỗi mình tính toán mà lớn hơn 2 bytes tiếp theo của rax thì lấy (số cũ - phần nguyên của số thử / 2), còn nếu nhỏ hơn (số cũ + phần nguyên của số thử / 2)
+- Lặp lại các bước đến khi khoảng cần thử nhỏ hơn 10 thì thử lần lượt giá trị để tìm ra được kết quả là 2 bytes tiếp theo của [rsp + 48] trùng với 2 bytes tiếp theo của rax.
+
+Sau khi làm các bước ở trên e tìm được ***key1*** cần tìm là ***35***
+
+<img width="231" height="89" alt="image" src="https://github.com/user-attachments/assets/f61ec1d9-c21e-4a84-a077-6fc5eed9552a" />
+
+<img width="516" height="138" alt="image" src="https://github.com/user-attachments/assets/ea9b0f93-9d33-40e4-b104-5733699d5819" />
 
 
+Để tìm ***key3*** ý tưởng của e tương tự nhưng có dựa vào gợi ý của kết quả của gemini với 3 số là 37, 97, 3589 = 37x97. Nên số bắt đầu thử của e là 1295.
 
+Thực hiện liên tục các bước tương tự ở đoạn tìm ***key1*** e tìm ra được số ***605***
+
+<img width="235" height="92" alt="image" src="https://github.com/user-attachments/assets/0aeeec5f-c0af-46c5-aa65-49cff0b158ec" />
+
+memory dump:
+
+<img width="197" height="16" alt="image" src="https://github.com/user-attachments/assets/02c82a63-637d-481f-8d27-9eb266225820" />
+
+rax:
+
+<img width="129" height="19" alt="image" src="https://github.com/user-attachments/assets/b1bc52bf-2588-4c5f-8276-1e03a451c7d1" />
+
+Ta đặt thêm break point ở trước hàm in flag rồi F8 đến khi flag hiện ra
+
+Flag: KCSC{You_have_passed_the_DSA_final_exam!!!}
