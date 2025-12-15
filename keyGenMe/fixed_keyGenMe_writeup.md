@@ -1,4 +1,5 @@
-<img width="801" height="435" alt="image" src="https://github.com/user-attachments/assets/eb9fb5b8-0707-4b27-a85e-93d8f799f3ae" /><img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/8df8d905-840d-418f-919b-9fa7c29f650d" />
+
+<img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/8df8d905-840d-418f-919b-9fa7c29f650d" />
 
 # Mở chương trình để test chức năng
 
@@ -16,7 +17,7 @@ Còn nếu không nhập gì nó hiện ra message box yêu cầu mình nhập �
 
 Mình có thử vứt program vào ghidra để patch nhảy đến chỗ thành công luôn thì hiện ra Activation Success! nhưng không hiện flag. Các anh giấu kĩ quá :P
 
-<img width="801" height="435" alt="image" src="https://github.com/user-attachments/assets/8f5d76f8-c0dd-4368-bd2b-2858f068902d" />
+<img width="801" height="435" alt="image" src="https://github.com/user-attachments/assets/eb9fb5b8-0707-4b27-a85e-93d8f799f3ae" />
 
 Từ các lần test trên mình đã rút ra vài được hoạt động chính của chương trình:
 
